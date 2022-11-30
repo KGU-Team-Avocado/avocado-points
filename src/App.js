@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Card, Container, Stack, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Card, Container, Divider, Grid, Stack, Typography } from '@mui/material';
 import loginlogs from './data/loginlogs.json';
+import defaultJSON from './data/default.json';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function App() {
@@ -13,15 +14,25 @@ function App() {
     funding: 116000
   }).reduce((a, b) => a + b, 0);
 
-  const [users, setUsers] = useState(
-    ["gabrielyoon7", "wlstn", "201912069",
-      "hido", "seeun", "yeonsu"].map((id) => ({
-        id: id,
-        attendance: 0,
-        login: 0,
-        event: 0
-      }))
-  );
+  const [users, setUsers] = useState(defaultJSON);
+
+  useEffect(() => {
+    updateLogs();
+  }, []);
+
+  const updateLogs = () => {
+  }
+
+  const yymmdd = (t) => {
+    const date = t.split(". ");
+    return date[0] + "-" + date[1] + "-" + date[2];
+  };
+
+  const koreanTime = (t) => {
+    const dateNum = Date.parse(t);
+    const date = new Date(dateNum).toLocaleString();
+    return date;
+  };
 
   return (
     <Box>
@@ -36,8 +47,20 @@ function App() {
         </Stack>
         <Stack>
           <Typography variant='h5'>총 장학금 : {scholarship}원</Typography>
-          <Typography variant='h5'>아이디 : {users.map((user) => user.id).join(', ')}</Typography>
-          <Card variant="outlined">{JSON.stringify(users)}</Card>
+          <Grid container spacing={1}>
+            {
+              users.map((user) => (
+                <Grid item xs={6} key={user.id}>
+                  <Card variant="outlined">
+                    <Box p={3}>
+                      {JSON.stringify(user)}
+                    </Box>
+                  </Card>
+                </Grid>
+              ))
+            }
+          </Grid>
+          <Box my={1}></Box>
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
