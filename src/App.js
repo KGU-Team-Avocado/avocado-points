@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Card, Container, Stack, Typography } from '@mui/material';
+import loginlogs from './data/loginlogs.json';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function App() {
@@ -21,7 +22,6 @@ function App() {
         event: 0
       }))
   );
-
 
   return (
     <Box>
@@ -44,12 +44,11 @@ function App() {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>Accordion 1</Typography>
+              <Typography>로그 확인 하기</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis eget.
+                {JSON.stringify(loginlogs)}
               </Typography>
             </AccordionDetails>
           </Accordion>
