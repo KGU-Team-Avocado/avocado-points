@@ -34,8 +34,13 @@ function App() {
   useEffect(() => {
     setUsers(defaultJSON);
     loginlogs.map((log)=>{
-      defaultJSON[findUserById(log.user_id)]?.login.push(numberLongToDate(log.time.$date.$numberLong))
+      const user = defaultJSON[findUserById(log.user_id)];
+      const date = numberLongToDate(log.time.$date.$numberLong)
+      if(!user?.login.includes(date)){
+        user?.login.push(date);
+      }
     })
+    
   });
 
   return (
@@ -67,7 +72,7 @@ function App() {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>로그 확인 하기</Typography>
+              <Typography>전체 로그 확인 하기</Typography>
             </AccordionSummary>
             <AccordionDetails>
               {
