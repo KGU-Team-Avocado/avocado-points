@@ -15,7 +15,7 @@ function App() {
     funding: 116000
   }).reduce((a, b) => a + b, 0);
 
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(defaultJSON);
 
   const numberLongToDate = (numberLong) => {
     const yymmdd = (t) => {
@@ -31,17 +31,31 @@ function App() {
     return idx;
   }
 
-  useEffect(() => {
-    setUsers(defaultJSON);
+  useEffect(()=>{
+    updateLoginLogs();
+    updateTotal();
+  },[]);
+
+  const updateLoginLogs = () => {
+    const nextUsers = [...users];
     loginlogs.map((log)=>{
-      const user = defaultJSON[findUserById(log.user_id)];
+      const user = nextUsers[findUserById(log.user_id)];
       const date = numberLongToDate(log.time.$date.$numberLong)
       if(!user?.login.includes(date)){
         user?.login.push(date);
       }
     })
-    
-  });
+    setUsers(nextUsers);
+  }
+
+  const updateTotal = () => {
+    const nextUsers = [...users];
+    nextUsers.map((user)=>{
+      user.total = user.attendance*5+user.login.length*2+user.event;
+    })
+    setUsers(nextUsers);
+  }
+
 
   return (
     <Box>
@@ -65,7 +79,7 @@ function App() {
               ))
             }
           </Grid>
-          <Box my={1}></Box>
+          <Box my={1}/>
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}

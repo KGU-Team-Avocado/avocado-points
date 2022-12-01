@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Card, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Card, Divider, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export default function UserCard({ user }) {
@@ -9,6 +9,7 @@ export default function UserCard({ user }) {
             <Card variant="outlined">
                 <Box p={3}>
                     <Typography variant='h5'>{user.id}</Typography>
+                    <Divider/>
                     <Typography>출석(5점) {user.attendance}회 : {5*user.attendance}점</Typography>
                     <Accordion>
                         <AccordionSummary
@@ -23,6 +24,8 @@ export default function UserCard({ user }) {
                         </AccordionDetails>
                     </Accordion>
                     <Typography>이벤트 : {user.event}점</Typography>
+                    <Divider/>
+                    <Typography variant='h6'>총점 : {user.total}점</Typography>
                 </Box>
             </Card>
         </>
