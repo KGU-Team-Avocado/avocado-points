@@ -17,23 +17,14 @@ function App() {
 
   const [users, setUsers] = useState(defaultJSON);
 
-  useEffect(() => {
-    updateLogs();
-  }, []);
-
-  const updateLogs = () => {
+  const numberLongToDate = (numberLong) => {
+    const yymmdd = (t) => {
+      const date = t.split(". ");
+      return date[0] + "-" + date[1] + "-" + date[2];
+    };
+    const date = new Date(parseInt(numberLong));
+    return yymmdd(date.toLocaleString());
   }
-
-  const yymmdd = (t) => {
-    const date = t.split(". ");
-    return date[0] + "-" + date[1] + "-" + date[2];
-  };
-
-  const koreanTime = (t) => {
-    const dateNum = Date.parse(t);
-    const date = new Date(dateNum).toLocaleString();
-    return date;
-  };
 
   return (
     <Box>
@@ -67,15 +58,22 @@ function App() {
               <Typography>로그 확인 하기</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
-                {JSON.stringify(loginlogs[0])}
-              </Typography>
-              <Typography>
-                {JSON.stringify(loginlogs[0].user_id)}
-              </Typography>
-              <Typography>
-                {JSON.stringify(Date(loginlogs[0].time.$date.$numberLong))}
-              </Typography>
+              {
+                loginlogs.map((log) => <>
+                <Stack direction="row">
+                  <Typography>
+                    {log.secure_num}
+                  </Typography>
+                  <Typography>
+                    {log.user_id}
+                  </Typography>
+                  <Typography>
+                    {numberLongToDate(log.time.$date.$numberLong)}
+                  </Typography>                  
+                </Stack>
+
+                </>)
+              }
             </AccordionDetails>
           </Accordion>
         </Stack>
