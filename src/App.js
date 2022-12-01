@@ -15,7 +15,7 @@ function App() {
     funding: 116000
   }).reduce((a, b) => a + b, 0);
 
-  const [users, setUsers] = useState(defaultJSON);
+  const [users, setUsers] = useState([]);
 
   const numberLongToDate = (numberLong) => {
     const yymmdd = (t) => {
@@ -25,6 +25,18 @@ function App() {
     const date = new Date(parseInt(numberLong));
     return yymmdd(date.toLocaleString());
   }
+
+  const findUserById = (id) => {
+    const idx = defaultJSON.findIndex((user) => user.id === id);
+    return idx;
+  }
+
+  useEffect(() => {
+    setUsers(defaultJSON);
+    loginlogs.map((log)=>{
+      defaultJSON[findUserById(log.user_id)]?.login.push(numberLongToDate(log.time.$date.$numberLong))
+    })
+  });
 
   return (
     <Box>
@@ -60,17 +72,17 @@ function App() {
             <AccordionDetails>
               {
                 loginlogs.map((log) => <>
-                <Stack direction="row">
-                  <Typography>
-                    {log.secure_num}
-                  </Typography>
-                  <Typography>
-                    {log.user_id}
-                  </Typography>
-                  <Typography>
-                    {numberLongToDate(log.time.$date.$numberLong)}
-                  </Typography>                  
-                </Stack>
+                  <Stack direction="row">
+                    <Typography>
+                      {log.secure_num}
+                    </Typography>
+                    <Typography>
+                      {log.user_id}
+                    </Typography>
+                    <Typography>
+                      {numberLongToDate(log.time.$date.$numberLong)}
+                    </Typography>
+                  </Stack>
 
                 </>)
               }

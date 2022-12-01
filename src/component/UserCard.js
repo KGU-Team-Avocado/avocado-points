@@ -9,7 +9,7 @@ export default function UserCard({user}) {
                 <Box p={3}>
                     <Typography>{user.id}</Typography>
                     <Typography>출석 : {user.attendance}</Typography>
-                    <Typography>로그인 : {user.login}</Typography>
+                    <Typography>로그인 : {user.login.length}</Typography>
                     <Typography>이벤트 : {user.event}</Typography>
                 </Box>
             </Card>
