@@ -4,6 +4,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Card, Container, Di
 import loginlogs from './data/loginlogs.json';
 import defaultJSON from './data/default.json';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import UserCard from './component/UserCard';
 
 function App() {
 
@@ -51,11 +52,7 @@ function App() {
             {
               users.map((user) => (
                 <Grid item xs={6} key={user.id}>
-                  <Card variant="outlined">
-                    <Box p={3}>
-                      {JSON.stringify(user)}
-                    </Box>
-                  </Card>
+                  <UserCard user={user} />
                 </Grid>
               ))
             }
@@ -71,7 +68,13 @@ function App() {
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                {JSON.stringify(loginlogs)}
+                {JSON.stringify(loginlogs[0])}
+              </Typography>
+              <Typography>
+                {JSON.stringify(loginlogs[0].user_id)}
+              </Typography>
+              <Typography>
+                {JSON.stringify(Date(loginlogs[0].time.$date.$numberLong))}
               </Typography>
             </AccordionDetails>
           </Accordion>
