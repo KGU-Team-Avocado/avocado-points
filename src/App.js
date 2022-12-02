@@ -31,17 +31,17 @@ function App() {
     return idx;
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     updateLoginLogs();
     updateTotal();
-  },[]);
+  }, []);
 
   const updateLoginLogs = () => {
     const nextUsers = [...users];
-    loginlogs.map((log)=>{
+    loginlogs.map((log) => {
       const user = nextUsers[findUserById(log.user_id)];
       const date = numberLongToDate(log.time.$date.$numberLong)
-      if(!user?.login.includes(date)){
+      if (!user?.login.includes(date)) {
         user?.login.push(date);
       }
     })
@@ -50,8 +50,8 @@ function App() {
 
   const updateTotal = () => {
     const nextUsers = [...users];
-    nextUsers.map((user)=>{
-      user.total = user.attendance*5+user.login.length*2+user.event;
+    nextUsers.map((user) => {
+      user.total = user.attendance * 5 + user.login.length * 2 + user.event;
     })
     setUsers(nextUsers);
   }
@@ -79,7 +79,7 @@ function App() {
               ))
             }
           </Grid>
-          <Box my={1}/>
+          <Box my={1} />
           <Accordion>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
@@ -89,27 +89,34 @@ function App() {
               <Typography>전체 로그 확인 하기</Typography>
             </AccordionSummary>
             <AccordionDetails>
+
               {
                 loginlogs.map((log) => <>
-                  <Stack direction="row">
-                    <Typography>
-                      {log.secure_num}
-                    </Typography>
-                    <Typography>
-                      {log.user_id}
-                    </Typography>
-                    <Typography>
-                      {numberLongToDate(log.time.$date.$numberLong)}
-                    </Typography>
-                  </Stack>
-
+                  <Grid container spacing={1} key={log.secure_num}>
+                    <Grid item xs={1}>
+                      <Typography>
+                        {log.secure_num}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Typography>
+                        {log.user_id}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={1}>
+                      <Typography>
+                        {numberLongToDate(log.time.$date.$numberLong)}
+                      </Typography>
+                    </Grid>
+                  </Grid>
                 </>)
               }
+
             </AccordionDetails>
           </Accordion>
         </Stack>
       </Container>
-    </Box>
+    </Box >
   );
 }
 
