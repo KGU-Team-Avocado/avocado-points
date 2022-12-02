@@ -5,29 +5,16 @@ import loginlogs from './data/loginlogs.json';
 import defaultJSON from './data/default.json';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import UserCard from './component/UserCard';
+import { findUserById, numberLongToDate } from './utils/commons';
+import LoginLog from './component/LoginLog';
+import { INCOME } from './utils/constants';
 
 function App() {
 
-  const scholarship = Object.values({
-    default: 500000,
-    members: 100000 * 6,
-    rewards: 300000,
-    funding: 116000
-  }).reduce((a, b) => a + b, 0);
+  const scholarship = Object.values(INCOME).reduce((a, b) => a + b, 0);
 
   const [users, setUsers] = useState(defaultJSON);
   const [totalPoints, setTotalPoints] = useState(0);
-
-  const numberLongToDate = (numberLong) => {
-    const yymmdd = (t) => {
-      const date = t.split(". ");
-      return date[0] + "-" + date[1] + "-" + date[2];
-    };
-    const date = new Date(parseInt(numberLong));
-    return yymmdd(date.toLocaleString());
-  }
-
-
 
   useEffect(() => {
     updateLoginLogs();
@@ -36,10 +23,6 @@ function App() {
   }, []);
 
   const updateLoginLogs = () => {
-    const findUserById = (id) => {
-      const idx = defaultJSON.findIndex((user) => user.id === id);
-      return idx;
-    }
     const nextUsers = [...users];
     loginlogs.map((log) => {
       const user = nextUsers[findUserById(log.user_id)];
@@ -60,7 +43,7 @@ function App() {
   }
 
   const countTotalPoints = () => {
-    const points = users.map((user)=>user.total).reduce((a,b)=>a+b,0);
+    const points = users.map((user) => user.total).reduce((a, b) => a + b, 0);
     setTotalPoints(points)
   }
 
@@ -82,7 +65,7 @@ function App() {
             {
               users.map((user) => (
                 <Grid item xs={12} sm={6} key={user.id}>
-                  <UserCard user={user} scholarship={scholarship} totalPoints={totalPoints}/>
+                  <UserCard user={user} scholarship={scholarship} totalPoints={totalPoints} />
                 </Grid>
               ))
             }
@@ -97,29 +80,9 @@ function App() {
               <Typography>전체 로그 확인 하기</Typography>
             </AccordionSummary>
             <AccordionDetails>
-
               {
-                loginlogs.map((log) => <>
-                  <Grid container spacing={1} key={log.secure_num}>
-                    <Grid item xs={1}>
-                      <Typography>
-                        {log.secure_num}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                      <Typography>
-                        {log.user_id}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={1}>
-                      <Typography>
-                        {numberLongToDate(log.time.$date.$numberLong)}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </>)
+                loginlogs.map((log) => <LoginLog key={log.secure_num} log={log} />)
               }
-
             </AccordionDetails>
           </Accordion>
         </Stack>
