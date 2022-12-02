@@ -73,7 +73,7 @@ function App() {
           <Grid container spacing={1}>
             {
               users.map((user) => (
-                <Grid item xs={6} key={user.id}>
+                <Grid item xs={12} sm={6} key={user.id}>
                   <UserCard user={user} />
                 </Grid>
               ))
