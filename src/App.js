@@ -16,6 +16,7 @@ function App() {
   }).reduce((a, b) => a + b, 0);
 
   const [users, setUsers] = useState(defaultJSON);
+  const [totalPoints, setTotalPoints] = useState(0);
 
   const numberLongToDate = (numberLong) => {
     const yymmdd = (t) => {
@@ -26,17 +27,19 @@ function App() {
     return yymmdd(date.toLocaleString());
   }
 
-  const findUserById = (id) => {
-    const idx = defaultJSON.findIndex((user) => user.id === id);
-    return idx;
-  }
+
 
   useEffect(() => {
     updateLoginLogs();
     updateTotal();
+    countTotalPoints();
   }, []);
 
   const updateLoginLogs = () => {
+    const findUserById = (id) => {
+      const idx = defaultJSON.findIndex((user) => user.id === id);
+      return idx;
+    }
     const nextUsers = [...users];
     loginlogs.map((log) => {
       const user = nextUsers[findUserById(log.user_id)];
@@ -56,6 +59,10 @@ function App() {
     setUsers(nextUsers);
   }
 
+  const countTotalPoints = () => {
+    const points = users.map((user)=>user.total).reduce((a,b)=>a+b,0);
+    setTotalPoints(points)
+  }
 
   return (
     <Box>
@@ -70,11 +77,12 @@ function App() {
         </Stack>
         <Stack>
           <Typography variant='h5'>총 장학금 : {scholarship}원</Typography>
+          <Typography variant='h5'>총 점수 : {totalPoints}점</Typography>
           <Grid container spacing={1}>
             {
               users.map((user) => (
                 <Grid item xs={12} sm={6} key={user.id}>
-                  <UserCard user={user} />
+                  <UserCard user={user} scholarship={scholarship} totalPoints={totalPoints}/>
                 </Grid>
               ))
             }

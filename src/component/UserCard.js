@@ -3,7 +3,7 @@ import React from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, Card, Divider, Stack, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-export default function UserCard({ user }) {
+export default function UserCard({ user, totalPoints, scholarship }) {
     const MiniCard = ({ children }) => {
         return (
             <Card>
@@ -39,6 +39,8 @@ export default function UserCard({ user }) {
                     </MiniCard>
                     <Divider />
                     <Typography variant='h6'>총점 : {user.total}점</Typography>
+                    <Typography variant='h6'>점수 비율 : {(user.total/totalPoints*100).toFixed(2)}%</Typography>
+                    <Typography variant='h6'>예상 수령 금액 : {(user.total/totalPoints*scholarship).toFixed(0)}원</Typography>
                 </Stack>
             </Card>
         </>
