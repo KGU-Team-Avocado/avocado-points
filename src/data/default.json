@@ -1,44 +1,44 @@
 [
     {
-        "id":"gabrielyoon7",
-        "attendance":16,
+        "id": "gabrielyoon7",
+        "attendance": 16,
         "login": [],
         "event": 0,
-        "total":0
+        "total": 0
     },
     {
-        "id":"wlstn",
-        "attendance":14,
+        "id": "wlstn",
+        "attendance": 14,
         "login": [],
-        "event": 0,
-        "total":0
+        "event": 20,
+        "total": 0
     },
     {
-        "id":"201912069",
-        "attendance":14,
+        "id": "201912069",
+        "attendance": 14,
         "login": [],
-        "event": 0,
-        "total":0
+        "event": 55,
+        "total": 0
     },
     {
-        "id":"hido",
-        "attendance":15,
+        "id": "hido",
+        "attendance": 15,
         "login": [],
-        "event": 0,
-        "total":0
+        "event": 70,
+        "total": 0
     },
     {
-        "id":"seeun",
-        "attendance":14,
+        "id": "seeun",
+        "attendance": 14,
         "login": [],
-        "event": 0,
-        "total":0
+        "event": 50,
+        "total": 0
     },
     {
-        "id":"yeonsu",
-        "attendance":13,
+        "id": "yeonsu",
+        "attendance": 13,
         "login": [],
-        "event": 0,
-        "total":0
+        "event": 30,
+        "total": 0
     }
 ]
